@@ -127,20 +127,22 @@ export const disconnectDatabase = async () => {
   }
 };
 
-// Helper to initialize the Turso database schema on demand
-export const initializeTursoSchema = async (customConfig?: any) => {
+// Helper to initialize database schema on demand (Turso, Neon PostgreSQL, etc.)
+export const initializeDatabaseSchema = async (customConfig?: any) => {
   const config = customConfig || getActiveDatabaseConfig();
   try {
     const res = await fetch('/api/db/init-schema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ config })
+      body: JSON.stringify({ provider: config?.provider, config })
     });
     return await res.json();
   } catch (err: any) {
-    return { success: false, error: err?.message || 'Erro ao inicializar tabelas no Turso' };
+    return { success: false, error: err?.message || 'Erro ao inicializar tabelas na base de dados' };
   }
 };
+
+export const initializeTursoSchema = initializeDatabaseSchema;
 
 // Helper to asynchronously fetch and merge environment variables configured on the server
 export const syncConfigFromServerEnv = async (): Promise<StoredDatabaseConfig | null> => {

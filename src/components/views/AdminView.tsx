@@ -124,6 +124,7 @@ import {
 import { CryptoService } from "../../services/cryptoService";
 import { SafTService } from "../../services/saftService";
 import { SignatureBadge } from "../common/SignatureBadge";
+import { ServerlessDatabaseConfig } from "../dev/ServerlessDatabaseConfig";
 import { TAX_IVA_14, TAX_IVA_EXEMPT, TAX_IS_1, MOCK_ROOMS, MOCK_USERS, MOCK_COMPANY, DEFAULT_MENU } from "../../constants/initialData";
 
 export function AdminView({ companyConfig, onUpdateCompany, developerSettings, onUpdateDeveloperSettings }: { 
@@ -150,6 +151,7 @@ export function AdminView({ companyConfig, onUpdateCompany, developerSettings, o
   const [newDevPassword, setNewDevPassword] = useState('');
   const [confirmDevPassword, setConfirmDevPassword] = useState('');
   const [devPassMessage, setDevPassMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [devUpdateMessage, setDevUpdateMessage] = useState<string | null>(null);
 
   // Developer Settings Local State
   const [devPaymentStatus, setDevPaymentStatus] = useState(developerSettings.paymentStatus);
@@ -239,7 +241,8 @@ export function AdminView({ companyConfig, onUpdateCompany, developerSettings, o
       databaseProvider: developerSettings.databaseProvider || "none"
     };
     onUpdateDeveloperSettings(newSettings);
-    alert("Configurações do Desenvolvedor atualizadas com sucesso!");
+    setDevUpdateMessage("Configurações da Licença atualizadas com sucesso!");
+    setTimeout(() => setDevUpdateMessage(null), 3500);
   };
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -731,7 +734,20 @@ export function AdminView({ companyConfig, onUpdateCompany, developerSettings, o
           </motion.div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-8">
+          <ServerlessDatabaseConfig
+            developerSettings={developerSettings}
+            onUpdateDeveloperSettings={onUpdateDeveloperSettings}
+          />
+
+          {devUpdateMessage && (
+            <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs font-bold text-emerald-800 flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-emerald-600" />
+              <span>{devUpdateMessage}</span>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-8">
             <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
               <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
@@ -1009,6 +1025,7 @@ export function AdminView({ companyConfig, onUpdateCompany, developerSettings, o
             </div>
           </div>
 
+        </div>
         </div>
       )}
 
