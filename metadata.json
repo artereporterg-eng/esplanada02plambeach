@@ -1,0 +1,8 @@
+{
+  "name": "Remix Pérola do Oceano - Gestão Integrada02",
+  "description": "ERP completo para gestão de hotel, lazer, eventos e POS com sincronização offline-first.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
