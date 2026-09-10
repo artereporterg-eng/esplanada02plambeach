@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express, { Request, Response } from "express";
-import { createClient as createLibsqlClient, Client as LibsqlClient } from "@libsql/client";
+import { createClient as createLibsqlClient, Client as LibsqlClient } from "@libsql/client/web";
 import { neon } from "@neondatabase/serverless";
 import fs from "fs";
 import path from "path";
@@ -13,8 +13,8 @@ export const getDatabaseEnv = () => {
   const pgUrl = (process.env.DATABASE_URL || process.env.POSTGRES_URL || "").trim();
   const supabaseUrl = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "").trim();
   const supabaseKey = (process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || "").trim();
-  const tursoUrl = (process.env.TURSO_DATABASE_URL || process.env.TURSO_URL || process.env.LIBSQL_URL || "").trim();
-  const tursoToken = (process.env.TURSO_AUTH_TOKEN || "").trim();
+  const tursoUrl = (process.env.TURSO_DATABASE_URL || process.env.VITE_TURSO_DATABASE_URL || process.env.TURSO_URL || process.env.LIBSQL_URL || "").trim();
+  const tursoToken = (process.env.TURSO_AUTH_TOKEN || process.env.VITE_TURSO_AUTH_TOKEN || "").trim();
   const upstashUrl = (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "").trim();
   const upstashToken = (process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "").trim();
 

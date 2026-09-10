@@ -9,6 +9,8 @@ export default defineConfig(({mode}) => {
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+      'import.meta.env.VITE_TURSO_DATABASE_URL': JSON.stringify(env.VITE_TURSO_DATABASE_URL || env.TURSO_DATABASE_URL || ''),
+      'import.meta.env.VITE_TURSO_AUTH_TOKEN': JSON.stringify(env.VITE_TURSO_AUTH_TOKEN || env.TURSO_AUTH_TOKEN || ''),
     },
     resolve: {
       alias: {
