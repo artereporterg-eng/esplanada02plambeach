@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express, { Request, Response } from "express";
 import { createClient as createLibsqlClient, Client as LibsqlClient } from "@libsql/client";
 import { neon } from "@neondatabase/serverless";
